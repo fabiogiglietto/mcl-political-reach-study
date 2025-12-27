@@ -188,12 +188,22 @@ The Meta Content Library API enforces strict data protection policies. Raw post-
 
 #### Setup Within Secure Environment
 
+**⚠️ IMPORTANT:** In Meta's Secure Research Environment (SRE), you **cannot** use `git clone` because external repository access is restricted for data protection. You must manually create notebooks and copy code from this repository.
+
+**Step-by-Step Setup Process:**
+
 ```bash
 # 1. Access your approved secure computing environment (e.g., Meta SRE)
 
-# 2. Clone this repository within the secure environment
-git clone https://github.com/[username]/mcl-political-reach-study.git
-cd mcl-political-reach-study
+# 2. Create project directory structure
+mkdir -p mcl-political-reach-study/notebooks
+mkdir -p mcl-political-reach-study/scripts
+mkdir -p mcl-political-reach-study/data/raw
+mkdir -p mcl-political-reach-study/data/processed
+mkdir -p mcl-political-reach-study/data/cleaned
+mkdir -p mcl-political-reach-study/outputs/figures
+mkdir -p mcl-political-reach-study/outputs/tables
+mkdir -p mcl-political-reach-study/config
 
 # 3. Install R dependencies (if not already available)
 # See Prerequisites section above for required packages
@@ -201,8 +211,27 @@ cd mcl-political-reach-study
 # 4. Create your MCL producer lists through the MCL UI
 # - Navigate to Meta Content Library web interface
 # - Create producer lists for your political actor groups
-# - Document list IDs in config/[country]_config.yaml
+# - Document the list IDs (you'll paste them into notebook 00)
 ```
+
+**For each notebook (00-07), you need to:**
+
+1. **In Meta SRE:** Create a new R notebook with the corresponding name
+   - Notebook 00: `00_data_download.ipynb`
+   - Notebook 01: `01_build_dataset.ipynb`
+   - Notebook 03: `03_data_cleaning.ipynb`
+   - Notebook 04: `04_enrich_surface_info.ipynb`
+   - Notebook 05: `05_producer_list_mapping.ipynb`
+   - Notebook 06: `06_breakpoint_analysis.ipynb`
+   - Notebook 07: `07_working_paper_outputs.ipynb`
+
+2. **From this GitHub repository:** Navigate to the `notebooks/` directory and open each `.ipynb` file
+
+3. **Copy & Paste:** Copy all code cells from the GitHub notebook into your Meta SRE notebook
+
+4. **Configure:** Update configuration values (producer list IDs, dates, etc.) in the appropriate cells
+
+**See [MANUAL_SETUP_GUIDE.md](MANUAL_SETUP_GUIDE.md) for detailed copy/paste instructions for each notebook.**
 
 #### Execution Workflow
 
