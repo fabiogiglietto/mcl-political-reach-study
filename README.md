@@ -176,17 +176,104 @@ mcl-political-reach-study/
 
 ### Running the Pipeline
 
+**⚠️ IMPORTANT: All data querying and analysis must be performed within Meta's secure computing environment.**
+
+The Meta Content Library API enforces strict data protection policies. Raw post-level data **cannot be downloaded** for local analysis. You must run the entire pipeline within one of these approved environments:
+
+- **Meta Secure Research Environment (SRE)** - Meta's cloud-based analysis platform
+- **SOMAR Virtual Data Enclave (VDE)** - Social Media Archive computing environment
+- **Other approved secure platforms** with MCL API access
+
+#### Setup Within Secure Environment
+
 ```bash
-# Clone repository
+# 1. Access your approved secure computing environment (e.g., Meta SRE)
+
+# 2. Clone this repository within the secure environment
 git clone https://github.com/[username]/mcl-political-reach-study.git
 cd mcl-political-reach-study
 
-# Copy your raw data exports to data/raw/
-# (These must be exported from Meta's Secure Research Environment)
+# 3. Install R dependencies (if not already available)
+# See Prerequisites section above for required packages
 
-# Run notebooks in order (1-7)
-# Each notebook documents its inputs and outputs
+# 4. Create your MCL producer lists through the MCL UI
+# - Navigate to Meta Content Library web interface
+# - Create producer lists for your political actor groups
+# - Document list IDs in config/[country]_config.yaml
 ```
+
+#### Execution Workflow
+
+Run notebooks **in numerical order** within the secure environment:
+
+```r
+# NOTEBOOK 00: Data Download (Queries MCL API)
+# - Queries posts from your producer lists
+# - Tracks provenance (which list each post came from)
+# - Smart batching for large datasets
+# Output: data_download_output/posts_with_provenance_DATE.rds
+
+# NOTEBOOK 01: Build Dataset (Data preparation)
+# - Processes raw MCL query output
+# - Standardizes list classifications
+# - Applies surface ID fallbacks
+# Output: combined_datasets/political_accounts_TIMESTAMP.rds
+
+# NOTEBOOK 03: Data Cleaning (Creates analysis datasets)
+# - Validates and cleans data
+# - Handles NA values with group-specific imputation
+# - Creates aggregated datasets (weekly, monthly, account-level)
+# Outputs: cleaned_data/*.rds files
+
+# NOTEBOOKS 04-05: Enrichment & Validation (Optional, requires API calls)
+# - 04: Enrich account metadata via MCL API
+# - 05: Verify producer list membership
+# Outputs: enriched surface info, mapping files
+
+# NOTEBOOK 06: Breakpoint Analysis (RQ1 - Main analysis)
+# - Detects structural breaks using Bai-Perron and PELT
+# - Validates across political actor groups
+# Outputs: RQ1_results_summary.rds, tables, figures
+
+# NOTEBOOK 07: Publication Outputs (Generate final results)
+# - Creates publication-ready tables and figures
+# Outputs: formatted tables and visualizations
+```
+
+#### Data Export Policy
+
+⚠️ **You cannot export raw post-level data** from the secure environment.
+
+**What you CAN export:**
+- ✅ Aggregated statistics (weekly/monthly totals, means)
+- ✅ Analysis results (breakpoint dates, phase comparisons)
+- ✅ Figures and visualization files
+- ✅ Summary tables (no individual posts/accounts)
+
+**What you CANNOT export:**
+- ❌ Raw post-level data (`cleaned_posts_*.rds`)
+- ❌ Individual account identifiers or metrics
+- ❌ Any file containing post IDs or surface IDs
+- ❌ Data that could re-identify specific content or accounts
+
+**Export review process:**
+1. Complete all analysis within the secure environment
+2. Generate aggregated outputs via Notebook 07
+3. Submit export requests through your platform's review process
+4. Only approved, non-sensitive outputs will be released
+
+#### Local Repository Use
+
+This GitHub repository serves as:
+- **Code distribution:** Share analysis scripts and notebooks
+- **Methodology documentation:** Explain analytical approach
+- **Results publication:** Host approved aggregated outputs
+- **Collaboration:** Enable reproducibility across secure environments
+
+Researchers replicate the study by:
+1. Cloning this repo **into their own secure environment**
+2. Running the pipeline on their own MCL data access
+3. Comparing results across countries/contexts
 
 ---
 
