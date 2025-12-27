@@ -161,8 +161,10 @@ mcl-political-reach-study/
 
 2. **R Environment** (R ≥ 4.3)
    ```r
-   # Install required packages
-   install.packages(c(
+   # Install required packages using Meta SRE method
+   library(fbrir)
+   cran <- CRAN$new()
+   cran$InstallPackages(c(
      "tidyverse", "lubridate", "strucchange", "changepoint",
      "zoo", "segmented", "patchwork", "scales", "moments",
      "lme4", "emmeans", "knitr"
