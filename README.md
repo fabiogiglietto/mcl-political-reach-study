@@ -60,9 +60,7 @@ mcl-political-reach-study/
 ├── docs/
 │   ├── DATA_DICTIONARY.md       # Variable definitions
 │   ├── METHODOLOGY.md           # Analytical approach explanation
-│   ├── DATASET_GUIDE.md         # Which dataset for which analysis
-│   ├── MCL_ACCESS_GUIDE.md      # Meta Content Library & SRE guide
-│   └── PIPELINE_DIAGRAM.md      # Visual workflow diagram
+│   └── DATASET_GUIDE.md         # Which dataset for which analysis
 │
 ├── data/
 │   ├── raw/                     # Original MCL API exports (not included)
@@ -156,11 +154,10 @@ mcl-political-reach-study/
 ### Prerequisites
 
 1. **Meta Content Library API Access**
-   - Must be an approved researcher with access to MCL
-   - Apply through ICPSR: https://socialmediaarchive.org/
-   - Choose platform: Meta Secure Research Environment (free) or SOMAR VDE
-   - Data must be queried within the secure computing environment
-   - **See [docs/MCL_ACCESS_GUIDE.md](docs/MCL_ACCESS_GUIDE.md) for detailed application and setup instructions**
+   - Must be an approved researcher with access to the Meta Content Library
+   - **Apply for access**: [Meta Content Library - Get Access](https://developers.facebook.com/docs/content-library-and-api/get-access)
+   - **Documentation**: [Meta Content Library and API Official Docs](https://developers.facebook.com/docs/content-library-and-api)
+   - Data must be queried within the secure computing environment (Meta SRE or approved platforms)
 
 2. **R Environment** (R ≥ 4.3)
    ```r

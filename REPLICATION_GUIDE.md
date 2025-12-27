@@ -8,11 +8,10 @@ This guide provides detailed instructions for replicating the Meta political con
 
 ### 1. Meta Content Library API Access
 - You must be an approved researcher with access to the Meta Content Library (MCL)
-- Apply through ICPSR at https://socialmediaarchive.org/
-- Choose your platform: Meta SRE (free) or SOMAR VDE (fees from Jan 2026)
-- Data queries must be executed within the secure computing environment
+- **Apply for access**: [Meta Content Library - Get Access](https://developers.facebook.com/docs/content-library-and-api/get-access)
+- **Official documentation**: [Meta Content Library and API Docs](https://developers.facebook.com/docs/content-library-and-api)
+- Data queries must be executed within the secure computing environment (Meta SRE or approved platforms)
 - Ensure your research proposal covers comparative political content analysis
-- **📖 See [docs/MCL_ACCESS_GUIDE.md](docs/MCL_ACCESS_GUIDE.md) for comprehensive MCL application, setup, and usage instructions**
 
 ### 2. Political Actor Identification
 Before starting, you need to identify:
@@ -77,7 +76,7 @@ Groups potentially subject to different algorithmic treatment:
 
 ### Step 2: Create MCL Producer Lists
 
-Producer lists are essential for filtering MCL data to your specific accounts of interest. See [docs/MCL_ACCESS_GUIDE.md](docs/MCL_ACCESS_GUIDE.md#producer-lists-key-to-political-research) for detailed instructions.
+Producer lists are essential for filtering MCL data to your specific accounts of interest. See the [Meta Content Library documentation](https://developers.facebook.com/docs/content-library-and-api) for detailed instructions on creating and managing producer lists.
 
 For each political actor group:
 
@@ -201,7 +200,7 @@ data_collection:
 
 ### Step 4: Query Data from MCL
 
-Execute queries within your secure computing environment (Meta SRE or SOMAR VDE). For comprehensive API guidance, see [docs/MCL_ACCESS_GUIDE.md](docs/MCL_ACCESS_GUIDE.md#api-endpoints-and-query-syntax).
+Execute queries within your secure computing environment (Meta SRE or SOMAR VDE). For comprehensive API guidance, see the [Meta Content Library API documentation](https://developers.facebook.com/docs/content-library-and-api).
 
 #### Query Structure (Python)
 
@@ -278,10 +277,7 @@ For large-scale studies (>500k posts), you have three strategies to accelerate d
 | **Team Quotas** | Each collaborator has own 500k quota | Multiply capacity by team size |
 | **Combined** | Extended quota + multiple team members | Fastest possible collection |
 
-**📖 See [docs/MCL_ACCESS_GUIDE.md](docs/MCL_ACCESS_GUIDE.md#-strategy-1-request-extended-quota-1-million) for detailed instructions on:**
-- How to request extended quota (1M) from Meta
-- Coordinating data collection across team members
-- Multi-week collection planning strategies
+**📖 For information on quota management and extended quotas, see the [Meta Content Library API documentation](https://developers.facebook.com/docs/content-library-and-api).**
 
 **Standard 5-week collection plan** (500k quota, single researcher):
 ```
