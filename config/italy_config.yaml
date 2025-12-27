@@ -1,0 +1,231 @@
+# Italy Configuration for Meta Political Content Policy Analysis
+# Reference implementation for the original study
+
+# ============================================================================
+# COUNTRY INFORMATION
+# ============================================================================
+country:
+  code: "IT"
+  name: "Italy"
+  language: "it"
+
+# ============================================================================
+# STUDY TIMEFRAME
+# ============================================================================
+study_period:
+  start_date: "2021-01-01"
+  end_date: "2025-11-30"
+
+# ============================================================================
+# META POLICY TIMELINE
+# Universal announcement dates plus Italy-specific expectations
+# ============================================================================
+policy_timeline:
+  initial_tests: "2021-02-17"
+  european_expansion: "2021-10-13"
+  global_implementation: "2022-07-19"
+  engagement_deemphasis: "2023-04-20"
+  user_controls: "2024-09-04"
+  reversal_announcement: "2025-01-07"
+  
+  # Italy-specific: Policy effects detected ~10 months before global announcement
+  # Based on data-driven breakpoint detection in study
+  expected_local_implementation: "2021-09-19"  # Detected T1
+
+# ============================================================================
+# ELECTORAL EVENTS
+# Major Italian elections during the study period
+# ============================================================================
+elections:
+  - name: "Italian General Election 2022"
+    date: "2022-09-25"
+    window_start: "2022-08-01"
+    window_end: "2022-11-30"
+    type: "national"
+    notes: "Resulted in Meloni government; potential election bounce visible in data"
+    
+  - name: "EU Parliamentary Election 2024"
+    date: "2024-06-09"
+    window_start: "2024-05-01"
+    window_end: "2024-06-30"
+    type: "european"
+    notes: "Pan-European election; transient bounce effect observed"
+
+# ============================================================================
+# POLITICAL ACTOR GROUPS
+# Italian-specific group definitions
+# ============================================================================
+groups:
+  discovery_sample: "MPs_Reelected"
+  
+  validation_samples:
+    - "MPs_New"
+    - "Prominent_Politicians"
+    - "Extremists"
+  
+  definitions:
+    MPs_Reelected:
+      description: "Members of Italian Parliament serving in both Legislature XVIII (2018-2022) and XIX (2022-2027)"
+      criteria: "Elected in both 2018 and 2022 general elections"
+      expected_n: "~280 accounts"
+      
+    MPs_New:
+      description: "Members of Italian Parliament elected only in Legislature XIX"
+      criteria: "First elected in September 2022 general election"
+      expected_n: "~270 accounts"
+      
+    Prominent_Politicians:
+      description: "High-profile Italian politicians not currently serving in Parliament"
+      criteria: "Most-followed Italian politicians on Facebook not in Parliament"
+      sources:
+        - "Regional governors (Presidenti di Regione)"
+        - "Party leaders without parliamentary seats"
+        - "Former prime ministers and ministers"
+        - "Major city mayors"
+      expected_n: "~200 accounts"
+      data_source: "politicasufacebook.it rankings"
+      
+    Extremists:
+      description: "Italian pages and figures in alternative/non-mainstream media ecosystem"
+      criteria: "Accounts centered on Euroskepticism, pro-Russian sentiment, and national sovereignty themes"
+      characteristics:
+        - "Counter-information and anti-system content"
+        - "Criticism of EU and geopolitical status quo"
+        - "Alternative cultural narratives"
+      expected_n: "~150 accounts"
+      notes: "Defined by content orientation, not political violence"
+
+# ============================================================================
+# META CONTENT LIBRARY PRODUCER LISTS
+# Actual list IDs used in the Italian study (example format)
+# ============================================================================
+producer_lists:
+  mps_all: "2025-09-21-ymub"                    # Parlamentari_ITA_Leg_XIX
+  mps_reelected: "2025-12-06-iqbp"              # Parlamentari_ITA_Leg_XIX_no_XVIII
+  prominent_politicians: "2025-12-24-vpry"      # Prominent_Politicians
+  extremists_cluster1: "2025-11-29-vpjr"        # Estremiste_cluster1
+  extremists_cluster2: "2025-11-29-qkqw"        # Estremiste_cluster2
+
+# ============================================================================
+# DATA QUALITY PARAMETERS
+# ============================================================================
+data_quality:
+  min_posts_per_period: 10
+  view_censoring_threshold: 100
+  view_imputation_method: "group_specific_ratio_weighted"
+  na_engagement_action: "remove"
+  
+  # Italian study found these group-specific imputation parameters:
+  imputation_parameters:
+    Extremists:
+      alpha: -0.36
+      ratio: 1.65
+      expected_mean: 44
+      notes: "Left-skewed distribution - more very low-view content"
+    Prominent_Politicians:
+      alpha: 0.33
+      ratio: 0.66
+      expected_mean: 56
+      notes: "Right-skewed - censored posts closer to 100-view threshold"
+    MPs_Reelected:
+      alpha: 0.14
+      ratio: 0.82
+      expected_mean: 53
+    MPs_New:
+      alpha: 0.03
+      ratio: 0.94
+      expected_mean: 51
+
+# ============================================================================
+# ANALYSIS PARAMETERS
+# ============================================================================
+analysis:
+  breakpoint_detection:
+    algorithms:
+      - "bai_perron"
+      - "pelt"
+    cluster_tolerance_days: 30
+    min_methods_for_validation: 2
+    
+  phase_model: "three_breakpoint"
+  
+  # Detected breakpoints from Italian study:
+  detected_breakpoints:
+    T1:
+      label: "Implementation"
+      date: "2021-09-19"
+      detection_range: "Aug 29 - Oct 3, 2021"
+      strength: "STRONG"
+      methods: 5
+      
+    T2:
+      label: "Adjustment"
+      date: "2023-01-01"
+      detection_range: "Oct 30, 2022 - Feb 12, 2023"
+      strength: "VERY STRONG"
+      methods: 13
+      notes: "Coincides with end of Italian election period"
+      
+    T3:
+      label: "Reversal"
+      date: "2025-03-09"
+      detection_range: "Mar 2 - May 4, 2025"
+      strength: "VERY STRONG"
+      methods: 9
+      notes: "~61 days after Meta's January 7, 2025 announcement"
+  
+  statistical_tests:
+    significance_level: 0.05
+    multiple_comparison_correction: "bonferroni"
+
+# ============================================================================
+# KEY FINDINGS (For Reference)
+# Results from the Italian study
+# ============================================================================
+findings:
+  baseline_mean_views: 53368
+  trough_mean_views: 14869
+  decline_percentage: 72.1
+  post_reversal_mean_views: 34918
+  recovery_percentage_of_baseline: 65.4
+  
+  validation_results:
+    MPs_Reelected: "DOWN → DOWN → UP ✓"
+    MPs_New: "DOWN → DOWN → UP ✓"
+    Prominent_Politicians: "DOWN → DOWN → UP ✓"
+    Extremists: "DOWN → DOWN → DOWN ✗"
+    
+  total_reach_robustness:
+    notes: "Extremists showed opposite pattern when using total weekly reach"
+    extremists_total_reach_change: "+13.7%"
+    interpretation: "High posting volume compensated for lower per-post reach"
+
+# ============================================================================
+# OUTPUT SETTINGS
+# ============================================================================
+output:
+  figures:
+    format: "png"
+    dpi: 300
+    width: 12
+    height: 6
+    
+  tables:
+    format: "csv"
+    decimal_places: 1
+    
+  colors:
+    MPs_Reelected: "#1f77b4"
+    MPs_New: "#ff7f0e"
+    Prominent_Politicians: "#d62728"
+    Extremists: "#9467bd"
+
+# ============================================================================
+# FILE PATHS
+# ============================================================================
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  cleaned_data: "data/cleaned"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
