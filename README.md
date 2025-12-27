@@ -410,6 +410,6 @@ For questions about replicating this study in other countries, please open an is
 
 ## Contact
 
-**Fabio Giglietto**  
-University of Urbino  
-[Email] | [ORCID]
+Fabio Giglietto
+University of Urbino
+fabio.giglietto@uniurb.it | 0000-0001-8019-1035
