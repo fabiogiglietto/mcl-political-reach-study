@@ -149,6 +149,86 @@ mcl-political-reach-study/
 
 ---
 
+## Replication Materials
+
+To facilitate replication and extension of this study, all analysis code and documentation are publicly available in this repository. The complete analytical pipeline—from data download through breakpoint detection—is provided as a series of documented notebooks that can be executed within the Meta Secure Research Environment (SRE) or other approved platforms with Meta Content Library API access.
+
+### Code Availability
+
+The complete analytical pipeline is available at: **https://github.com/fabiogiglietto/mcl-political-reach-study**
+
+The repository includes seven core notebooks:
+- **00_data_download.ipynb:** Data download from MCL API
+- **01_build_dataset.ipynb:** Dataset construction and standardization
+- **03_data_cleaning.ipynb:** Data cleaning and validation
+- **04_enrich_surface_info.ipynb:** Account metadata enrichment
+- **05_producer_list_mapping.ipynb:** Producer list verification
+- **06_breakpoint_analysis.ipynb:** Breakpoint analysis (RQ1)
+- **07_working_paper_outputs.ipynb:** Publication outputs
+
+Each notebook contains detailed documentation and is designed to run sequentially within the secure computing environment. The repository also provides configuration templates for adapting the methodology to other country contexts.
+
+### Data Access Requirements
+
+Replication requires approved researcher access to the **Meta Content Library API**. The Meta Content Library provides comprehensive access to publicly available content from Facebook and Instagram, including post-level engagement metrics and view counts.
+
+**To obtain access:**
+- Apply through Meta's official application process: [Meta Content Library - Get Access](https://developers.facebook.com/docs/content-library-and-api/get-access)
+- All data querying and analysis must be conducted within Meta's secure computing environment
+- Raw post-level data cannot be downloaded for local analysis due to Meta's data protection policies
+
+**Documentation:**
+- Official API docs: [Meta Content Library and API Documentation](https://developers.facebook.com/docs/content-library-and-api)
+
+### Producer Lists
+
+The original producer lists used in this study are publicly accessible to any researcher with Meta Content Library API access. These lists can be imported directly into new research projects, enabling exact replication of the sample.
+
+**Italian Study Producer Lists:**
+
+1. **MPs (Re-elected):** Members of Parliament elected in both 2018 and 2022 legislatures
+   https://www.facebook.com/transparency-tools/content-library/producer-lists/1508867967036191/
+
+2. **Parlamentari ITA Leg XIX:** All members of the XIX Italian legislature (2022–present)
+   https://www.facebook.com/transparency-tools/content-library/producer-lists/1079401170932761/
+
+3. **Prominent Politicians:** Most-followed Italian politicians not holding parliamentary seats
+   https://www.facebook.com/transparency-tools/content-library/producer-lists/2018160402336859/
+
+4. **Extremists (Cluster 1):** Italian pages and public figures in the alternative media ecosystem
+   https://www.facebook.com/transparency-tools/content-library/producer-lists/1546733040084559/
+
+5. **Extremists (Cluster 2):** Additional Italian pages and public figures in the alternative media ecosystem
+   https://www.facebook.com/transparency-tools/content-library/producer-lists/25433097262993192/
+
+**For detailed information on list composition, membership criteria, and import instructions, see [PRODUCER_LISTS.md](PRODUCER_LISTS.md).**
+
+### Cross-Country Replication
+
+The repository includes a detailed replication guide ([REPLICATION_GUIDE.md](REPLICATION_GUIDE.md)) for adapting the methodology to other national contexts.
+
+**To examine Meta's political content policy in other countries:**
+
+1. **Identify analogous political actor categories:**
+   - Elected representatives (e.g., MPs, Congress members, Parliament members)
+   - Prominent non-elected politicians (party leaders, governors, etc.)
+   - Comparison groups (optional: extremist accounts, alternative media)
+
+2. **Create producer lists** in the MCL interface for each category
+
+3. **Adapt configuration files** to specify country-specific parameters:
+   - Election dates
+   - Policy timeline expectations
+   - Study timeframe
+
+4. **Execute pipeline notebooks** in sequence (00 → 07)
+
+The modular design allows researchers to modify individual components while maintaining methodological consistency with the original study.
+
+**Important Note:** While code and producer lists are publicly available, raw post-level data cannot be shared outside the secure environment. Replication therefore requires independent data collection through the MCL API. Aggregated results and statistical outputs can be exported following Meta's review process for non-sensitive materials.
+
+---
+
 ## Quick Start
 
 ### Prerequisites
