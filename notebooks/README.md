@@ -2,7 +2,7 @@
 
 This directory contains the Jupyter notebooks that implement the full analysis pipeline. Run them in numerical order.
 
-> **📖 Prerequisites:** Before running these notebooks, you must have Meta Content Library API access and have collected your data. See [docs/MCL_ACCESS_GUIDE.md](../docs/MCL_ACCESS_GUIDE.md) for detailed setup instructions.
+> **📖 Prerequisites:** Before running these notebooks, you must have Meta Content Library API access and have collected your data. See the [Meta Content Library API documentation](https://developers.facebook.com/docs/content-library-and-api) for detailed setup instructions.
 
 ---
 
@@ -77,7 +77,7 @@ START_DATE <- "2020-01-01"
 END_DATE <- "2024-12-31"
 ```
 
-**Note:** See [MCL Access Guide](../docs/MCL_ACCESS_GUIDE.md) for quota strategies and producer list creation.
+**Note:** See the [Meta Content Library API documentation](https://developers.facebook.com/docs/content-library-and-api) for quota strategies and producer list creation.
 
 ---
 
