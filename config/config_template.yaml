@@ -1,0 +1,191 @@
+# Configuration Template for Meta Political Content Policy Analysis
+# Copy this file and rename to [country_code]_config.yaml
+# Fill in all parameters for your country
+
+# ============================================================================
+# COUNTRY INFORMATION
+# ============================================================================
+country:
+  code: "XX"                    # ISO 3166-1 alpha-2 code
+  name: "Country Name"
+  language: "en"                # Primary language code
+
+# ============================================================================
+# STUDY TIMEFRAME
+# ============================================================================
+study_period:
+  # Start date: Should capture pre-policy baseline (February 2021 earliest)
+  start_date: "2021-01-01"
+  
+  # End date: Should capture post-reversal period (after January 2025)
+  end_date: "2025-11-30"
+
+# ============================================================================
+# META POLICY TIMELINE
+# These are Meta's official announcement dates (universal)
+# Your detected breakpoints may differ based on actual implementation timing
+# ============================================================================
+policy_timeline:
+  # Initial tests (US, Canada, Brazil, Indonesia)
+  initial_tests: "2021-02-17"
+  
+  # Expansion to European countries (expect effects around this time)
+  european_expansion: "2021-10-13"
+  
+  # Global implementation announcement
+  global_implementation: "2022-07-19"
+  
+  # Engagement signal de-emphasis announcement
+  engagement_deemphasis: "2023-04-20"
+  
+  # User control settings introduced
+  user_controls: "2024-09-04"
+  
+  # Policy reversal announcement
+  reversal_announcement: "2025-01-07"
+  
+  # Expected policy effect timing for your country
+  # (Estimate based on when your country likely received the policy)
+  expected_local_implementation: "2021-10-01"  # Adjust based on your region
+
+# ============================================================================
+# ELECTORAL EVENTS
+# List all major elections during the study period
+# These will be marked on visualizations and analyzed for "election bounce"
+# ============================================================================
+elections:
+  - name: "National Election YYYY"
+    date: "YYYY-MM-DD"           # Election day
+    window_start: "YYYY-MM-DD"   # Start of campaign period
+    window_end: "YYYY-MM-DD"     # Post-election period end
+    type: "national"             # national, regional, european, local
+    
+  - name: "EU Parliamentary Election 2024"
+    date: "2024-06-09"           # Adjust for your country's voting day
+    window_start: "2024-05-01"
+    window_end: "2024-06-30"
+    type: "european"
+
+# ============================================================================
+# POLITICAL ACTOR GROUPS
+# Define the groups for your analysis
+# ============================================================================
+groups:
+  # Discovery sample: Group used to identify breakpoints
+  # Should have continuous activity throughout study period
+  discovery_sample: "MPs_Reelected"
+  
+  # Validation samples: Groups used to validate discovered breakpoints
+  validation_samples:
+    - "MPs_New"
+    - "Prominent_Politicians"
+    - "Extremists"  # Optional comparison group
+  
+  # Group definitions
+  definitions:
+    MPs_Reelected:
+      description: "Members of Parliament serving in both pre-policy and post-policy legislatures"
+      criteria: "Elected in both XXXX and YYYY legislatures"
+      
+    MPs_New:
+      description: "Members of Parliament elected only in the post-policy legislature"
+      criteria: "First elected in YYYY legislature"
+      
+    MPs:
+      description: "All Members of Parliament (if not splitting by experience)"
+      criteria: "Current members of the national legislature"
+      
+    Prominent_Politicians:
+      description: "High-profile politicians not in the legislature"
+      criteria: "Politicians with >100k Facebook followers, not currently MPs"
+      sources:
+        - "Party leaders not in parliament"
+        - "Regional/state leaders"
+        - "Former national leaders"
+        
+    Extremists:
+      description: "Non-mainstream political accounts (optional comparison)"
+      criteria: "Accounts identified as promoting extremist political content"
+      notes: "Define carefully based on local context"
+
+# ============================================================================
+# META CONTENT LIBRARY PRODUCER LISTS
+# Enter your MCL producer list IDs after creating them
+# ============================================================================
+producer_lists:
+  # Format: list_name: "YYYY-MM-DD-xxxx"
+  mps_all: "YYYY-MM-DD-xxxx"
+  mps_reelected: "YYYY-MM-DD-xxxx"        # Optional if splitting by experience
+  prominent_politicians: "YYYY-MM-DD-xxxx"
+  extremists: "YYYY-MM-DD-xxxx"            # Optional
+
+# ============================================================================
+# DATA QUALITY PARAMETERS
+# ============================================================================
+data_quality:
+  # Minimum posts required per period for balanced panel inclusion
+  min_posts_per_period: 10
+  
+  # View censoring threshold (MCL returns NA for views ≤ this value)
+  view_censoring_threshold: 100
+  
+  # Imputation method for censored views
+  view_imputation_method: "group_specific_ratio_weighted"
+  
+  # Handle posts with NA engagement metrics
+  na_engagement_action: "remove"  # remove or impute
+
+# ============================================================================
+# ANALYSIS PARAMETERS
+# ============================================================================
+analysis:
+  # Breakpoint detection settings
+  breakpoint_detection:
+    algorithms:
+      - "bai_perron"
+      - "pelt"
+    cluster_tolerance_days: 30
+    min_methods_for_validation: 2
+    
+  # Phase model
+  phase_model: "three_breakpoint"  # three_breakpoint or two_breakpoint
+  
+  # Statistical tests
+  statistical_tests:
+    significance_level: 0.05
+    multiple_comparison_correction: "bonferroni"
+    
+# ============================================================================
+# OUTPUT SETTINGS
+# ============================================================================
+output:
+  # Figure settings
+  figures:
+    format: "png"
+    dpi: 300
+    width: 12
+    height: 6
+    
+  # Table format
+  tables:
+    format: "csv"
+    decimal_places: 1
+    
+  # Color scheme for groups
+  colors:
+    MPs_Reelected: "#1f77b4"
+    MPs_New: "#ff7f0e"
+    MPs: "#2ca02c"
+    Prominent_Politicians: "#d62728"
+    Extremists: "#9467bd"
+
+# ============================================================================
+# FILE PATHS
+# Adjust these based on your directory structure
+# ============================================================================
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  cleaned_data: "data/cleaned"
+  figures: "outputs/figures"
+  tables: "outputs/tables"

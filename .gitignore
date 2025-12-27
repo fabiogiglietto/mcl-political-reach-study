@@ -1,0 +1,122 @@
+# ==================================================
+# .gitignore for Meta Political Content Policy Analysis
+# ==================================================
+
+# DATA FILES
+# Never commit raw or processed data (MCL Terms of Service)
+# --------------------------------------------------
+data/raw/**
+data/processed/**
+data/cleaned/**
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/cleaned/.gitkeep
+
+# Large data files
+*.rds
+*.csv
+*.xlsx
+*.xls
+*.parquet
+
+# R/RStudio
+# --------------------------------------------------
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+*.Rproj.user/
+*.Rproj
+
+# Jupyter Notebooks
+# --------------------------------------------------
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+*.ipynb_checkpoints
+
+# Python
+# --------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+.venv
+
+# Output files (regenerate don't commit)
+# --------------------------------------------------
+outputs/figures/*.png
+outputs/figures/*.pdf
+outputs/figures/*.jpg
+outputs/tables/*.csv
+outputs/tables/*.xlsx
+!outputs/figures/.gitkeep
+!outputs/tables/.gitkeep
+
+# Results summaries (may contain data)
+RQ1_*.csv
+RQ1_*.rds
+RQ1_*.png
+
+# IDE and editors
+# --------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary files
+# --------------------------------------------------
+*.tmp
+*.temp
+*.log
+*.bak
+
+# Credentials and secrets
+# --------------------------------------------------
+*.env
+.env.*
+credentials/
+secrets/
+*.pem
+*.key
+
+# OS-specific
+# --------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Archive files
+# --------------------------------------------------
+*.zip
+*.tar
+*.gz
+*.7z
+*.rar
+
+# Documentation builds
+# --------------------------------------------------
+docs/_build/
+site/
+
+# Test outputs
+# --------------------------------------------------
+test_outputs/
+.pytest_cache/
+coverage/
+.coverage
+
+# Local configuration
+# --------------------------------------------------
+config/local_*.yaml
+config/*.local.yaml
