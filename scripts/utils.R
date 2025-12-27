@@ -13,7 +13,10 @@
 required_packages <- c("tidyverse", "lubridate", "yaml")
 for (pkg in required_packages) {
   if (!require(pkg, character.only = TRUE, quietly = TRUE)) {
-    install.packages(pkg)
+    # Install using Meta SRE method
+    library(fbrir)
+    cran <- CRAN$new()
+    cran$InstallPackages(pkg)
   }
   library(pkg, character.only = TRUE)
 }

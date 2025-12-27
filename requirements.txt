@@ -1,5 +1,8 @@
 # R Package Dependencies for Meta Political Content Policy Analysis
-# Install with: install.packages(readLines("requirements.txt"))
+# Install in Meta SRE with:
+# library(fbrir)
+# cran <- CRAN$new()
+# cran$InstallPackages(readLines("requirements.txt"))
 
 # Core data manipulation
 tidyverse
