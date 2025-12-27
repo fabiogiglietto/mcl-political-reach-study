@@ -482,9 +482,9 @@ For questions about replicating this study in other countries, please open an is
 
 ## Acknowledgments
 
-- This research was conducted using the Meta Content Library API
-- Thanks to [institutional affiliations]
-- [Funding acknowledgments if applicable]
+This research was conducted using the Meta Content Library API. We thank Research Partnerships at Meta for providing access to the Meta Content Library and supporting academic research on platform governance.
+
+We are grateful to Giada Marino (University of Urbino) for valuable feedback and contributions to the development of this research project.
 
 ---
 
