@@ -155,8 +155,6 @@ To facilitate replication and extension of this study, all analysis code and doc
 
 ### Code Availability
 
-The complete analytical pipeline is available at: **https://github.com/fabiogiglietto/mcl-political-reach-study**
-
 The repository includes seven core notebooks:
 - **00_data_download.ipynb:** Data download from MCL API
 - **01_build_dataset.ipynb:** Dataset construction and standardization
