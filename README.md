@@ -484,6 +484,8 @@ This research was conducted using the Meta Content Library API. We thank Researc
 
 We are grateful to Giada Marino and Massimo Terenzi (University of Urbino) for valuable feedback and contributions to the development of this research project.
 
+Anthropic Claude was used to assist with coding, designing and developing the GitHub repository infrastructure, improving the English language in the paper, and supporting various aspects of the research project development.
+
 ---
 
 ## Contact
