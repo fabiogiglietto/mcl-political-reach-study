@@ -15,6 +15,8 @@ This repository contains the complete analytical pipeline for studying Meta's po
 This pipeline was developed for the study:
 
 > **"A Pretty Blunt Approach": Meta's Political Content Reduction Policy and Italian Parliamentarians' Facebook Visibility**
+>
+> **Preprint:** https://osf.io/preprints/socarxiv/8dqag_v1/
 
 The methodology is designed to be **fully reproducible** and **adaptable to other countries** where researchers have access to the Meta Content Library.
 
