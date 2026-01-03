@@ -48,11 +48,11 @@ mcl-political-reach-study/
 ├── notebooks/
 │   ├── 00_data_download.ipynb           # Download posts from MCL API
 │   ├── 01_build_dataset.ipynb           # Process MCL output, standardize lists
-│   ├── 03_data_cleaning.ipynb           # Validation, cleaning, aggregation
-│   ├── 04_enrich_surface_info.ipynb     # API enrichment of account metadata
-│   ├── 05_producer_list_mapping.ipynb   # Verify account list membership
-│   ├── 06_breakpoint_analysis.ipynb     # RQ1: Main breakpoint detection
-│   └── 07_working_paper_outputs.ipynb   # Generate tables/figures for paper
+│   ├── 02_data_cleaning.ipynb           # Validation, cleaning, aggregation
+│   ├── 03_enrich_surface_info.ipynb     # API enrichment of account metadata
+│   ├── 04_producer_list_mapping.ipynb   # Verify account list membership
+│   ├── 05_breakpoint_analysis.ipynb     # RQ1: Main breakpoint detection
+│   └── 06_working_paper_outputs.ipynb   # Generate tables/figures for paper
 │
 ├── scripts/
 │   ├── utils.R                  # Shared utility functions
@@ -110,7 +110,7 @@ mcl-political-reach-study/
 │                                │                                        │
 │                                ▼                                        │
 │  ┌─────────────────────────────────────────────────────────────────┐   │
-│  │        NOTEBOOK 03: DATA CLEANING & PREPARATION                 │   │
+│  │        NOTEBOOK 02: DATA CLEANING & PREPARATION                 │   │
 │  │  • Validate merge integrity (one account → one list)            │   │
 │  │  • Handle NA views (group-specific imputation)                  │   │
 │  │  • Remove NA engagement metrics                                 │   │
@@ -130,7 +130,7 @@ mcl-political-reach-study/
 │                                │                                        │
 │                                ▼                                        │
 │  ┌─────────────────────────────────────────────────────────────────┐   │
-│  │        NOTEBOOK 06: BREAKPOINT ANALYSIS (RQ1)                   │   │
+│  │        NOTEBOOK 05: BREAKPOINT ANALYSIS (RQ1)                   │   │
 │  │  • Bai-Perron structural break detection                        │   │
 │  │  • PELT changepoint detection                                   │   │
 │  │  • Cross-algorithm validation                                   │   │
@@ -140,7 +140,7 @@ mcl-political-reach-study/
 │                                │                                        │
 │                                ▼                                        │
 │  ┌─────────────────────────────────────────────────────────────────┐   │
-│  │        NOTEBOOK 07: WORKING PAPER OUTPUTS                       │   │
+│  │        NOTEBOOK 06: WORKING PAPER OUTPUTS                       │   │
 │  │  • Generate publication-ready tables                            │   │
 │  │  • Create figures aligned with paper sections                   │   │
 │  │  • Export results summary                                       │   │
@@ -160,11 +160,11 @@ To facilitate replication and extension of this study, all analysis code and doc
 The repository includes seven core notebooks:
 - **00_data_download.ipynb:** Data download from MCL API
 - **01_build_dataset.ipynb:** Dataset construction and standardization
-- **03_data_cleaning.ipynb:** Data cleaning and validation
-- **04_enrich_surface_info.ipynb:** Account metadata enrichment
-- **05_producer_list_mapping.ipynb:** Producer list verification
-- **06_breakpoint_analysis.ipynb:** Breakpoint analysis (RQ1)
-- **07_working_paper_outputs.ipynb:** Publication outputs
+- **02_data_cleaning.ipynb:** Data cleaning and validation
+- **03_enrich_surface_info.ipynb:** Account metadata enrichment
+- **04_producer_list_mapping.ipynb:** Producer list verification
+- **05_breakpoint_analysis.ipynb:** Breakpoint analysis (RQ1)
+- **06_working_paper_outputs.ipynb:** Publication outputs
 
 Each notebook contains detailed documentation and is designed to run sequentially within the secure computing environment. The repository also provides configuration templates for adapting the methodology to other country contexts.
 
@@ -299,11 +299,11 @@ mkdir -p mcl-political-reach-study/config
 1. **In Meta SRE:** Create a new R notebook with the corresponding name
    - Notebook 00: `00_data_download.ipynb`
    - Notebook 01: `01_build_dataset.ipynb`
-   - Notebook 03: `03_data_cleaning.ipynb`
-   - Notebook 04: `04_enrich_surface_info.ipynb`
-   - Notebook 05: `05_producer_list_mapping.ipynb`
-   - Notebook 06: `06_breakpoint_analysis.ipynb`
-   - Notebook 07: `07_working_paper_outputs.ipynb`
+   - Notebook 02: `02_data_cleaning.ipynb`
+   - Notebook 03: `03_enrich_surface_info.ipynb`
+   - Notebook 04: `04_producer_list_mapping.ipynb`
+   - Notebook 05: `05_breakpoint_analysis.ipynb`
+   - Notebook 06: `06_working_paper_outputs.ipynb`
 
 2. **From this GitHub repository:** Navigate to the `notebooks/` directory and open each `.ipynb` file
 
@@ -330,23 +330,23 @@ Run notebooks **in numerical order** within the secure environment:
 # - Applies surface ID fallbacks
 # Output: combined_datasets/political_accounts_TIMESTAMP.rds
 
-# NOTEBOOK 03: Data Cleaning (Creates analysis datasets)
+# NOTEBOOK 02: Data Cleaning (Creates analysis datasets)
 # - Validates and cleans data
 # - Handles NA values with group-specific imputation
 # - Creates aggregated datasets (weekly, monthly, account-level)
 # Outputs: cleaned_data/*.rds files
 
-# NOTEBOOKS 04-05: Enrichment & Validation (Optional, requires API calls)
-# - 04: Enrich account metadata via MCL API
-# - 05: Verify producer list membership
+# NOTEBOOKS 03-04: Enrichment & Validation (Optional, requires API calls)
+# - 03: Enrich account metadata via MCL API
+# - 04: Verify producer list membership
 # Outputs: enriched surface info, mapping files
 
-# NOTEBOOK 06: Breakpoint Analysis (RQ1 - Main analysis)
+# NOTEBOOK 05: Breakpoint Analysis (RQ1 - Main analysis)
 # - Detects structural breaks using Bai-Perron and PELT
 # - Validates across political actor groups
 # Outputs: RQ1_results_summary.rds, tables, figures
 
-# NOTEBOOK 07: Publication Outputs (Generate final results)
+# NOTEBOOK 06: Publication Outputs (Generate final results)
 # - Creates publication-ready tables and figures
 # Outputs: formatted tables and visualizations
 ```

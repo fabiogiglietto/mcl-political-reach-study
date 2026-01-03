@@ -147,11 +147,11 @@ INPUT_FILE <- "data_download_output/posts_with_provenance_2024-12-27.rds"  # Upd
 
 ---
 
-### Notebook 03: Data Cleaning (`03_data_cleaning.ipynb`)
+### Notebook 02: Data Cleaning (`02_data_cleaning.ipynb`)
 
 **Purpose:** Validate data, handle missing values, create aggregated datasets
 
-**GitHub Location:** `notebooks/03_data_cleaning.ipynb`
+**GitHub Location:** `notebooks/02_data_cleaning.ipynb`
 
 **Critical Configuration Required:**
 
@@ -179,11 +179,11 @@ STUDY_END_DATE <- as.Date("2025-01-31")
 
 ---
 
-### Notebook 04: Enrich Surface Info (`04_enrich_surface_info.ipynb`)
+### Notebook 03: Enrich Surface Info (`03_enrich_surface_info.ipynb`)
 
 **Purpose:** Retrieve additional account metadata from MCL API
 
-**GitHub Location:** `notebooks/04_enrich_surface_info.ipynb`
+**GitHub Location:** `notebooks/03_enrich_surface_info.ipynb`
 
 **Note:** This notebook is **optional** but recommended for enriching account metadata.
 
@@ -203,11 +203,11 @@ INPUT_FILE <- "combined_datasets/political_accounts_TIMESTAMP.rds"
 
 ---
 
-### Notebook 05: Producer List Mapping (`05_producer_list_mapping.ipynb`)
+### Notebook 04: Producer List Mapping (`04_producer_list_mapping.ipynb`)
 
 **Purpose:** Verify which accounts belong to which producer lists
 
-**GitHub Location:** `notebooks/05_producer_list_mapping.ipynb`
+**GitHub Location:** `notebooks/04_producer_list_mapping.ipynb`
 
 **Note:** This notebook is **optional** but useful for validation.
 
@@ -230,11 +230,11 @@ PRODUCER_LIST_IDS <- c(
 
 ---
 
-### Notebook 06: Breakpoint Analysis (`06_breakpoint_analysis.ipynb`)
+### Notebook 05: Breakpoint Analysis (`05_breakpoint_analysis.ipynb`)
 
 **Purpose:** Main analysis - detect structural breaks in reach time series (RQ1)
 
-**GitHub Location:** `notebooks/06_breakpoint_analysis.ipynb`
+**GitHub Location:** `notebooks/05_breakpoint_analysis.ipynb`
 
 **Critical Configuration Required:**
 
@@ -270,11 +270,11 @@ POLICY_DATES <- list(
 
 ---
 
-### Notebook 07: Working Paper Outputs (`07_working_paper_outputs.ipynb`)
+### Notebook 06: Working Paper Outputs (`06_working_paper_outputs.ipynb`)
 
 **Purpose:** Generate publication-ready tables and figures
 
-**GitHub Location:** `notebooks/07_working_paper_outputs.ipynb`
+**GitHub Location:** `notebooks/06_working_paper_outputs.ipynb`
 
 **Configuration Required:**
 
@@ -311,21 +311,21 @@ Once all notebooks are created and configured:
 2. **Run Notebook 01** - Build dataset
    - ⏱️ Expected time: 5-10 minutes
 
-3. **Run Notebook 03** - Clean and aggregate data
+3. **Run Notebook 02** - Clean and aggregate data
    - ⏱️ Expected time: 10-20 minutes
 
-4. **(Optional) Run Notebook 04** - Enrich surface info
+4. **(Optional) Run Notebook 03** - Enrich surface info
    - ⏱️ Expected time: 10-30 minutes
    - Requires additional API calls
 
-5. **(Optional) Run Notebook 05** - Verify producer list mapping
+5. **(Optional) Run Notebook 04** - Verify producer list mapping
    - ⏱️ Expected time: 5-10 minutes
 
-6. **Run Notebook 06** - Main breakpoint analysis
+6. **Run Notebook 05** - Main breakpoint analysis
    - ⏱️ Expected time: 15-30 minutes
    - Most computationally intensive
 
-7. **Run Notebook 07** - Generate publication outputs
+7. **Run Notebook 06** - Generate publication outputs
    - ⏱️ Expected time: 5-10 minutes
 
 ---
@@ -338,7 +338,7 @@ Once all notebooks are created and configured:
 - Analysis results (breakpoint dates, phase comparisons, statistical tests)
 - Figures and visualizations
 - Summary tables without individual post/account identifiers
-- Results from Notebook 07 (designed for export compliance)
+- Results from Notebook 06 (designed for export compliance)
 
 ### ❌ What You CANNOT Export:
 
@@ -350,7 +350,7 @@ Once all notebooks are created and configured:
 ### Export Process:
 
 1. Complete all analysis within Meta SRE
-2. Generate aggregated outputs via Notebook 07
+2. Generate aggregated outputs via Notebook 06
 3. Submit export request through Meta's review process
 4. Only approved, non-sensitive outputs will be released
 
@@ -406,7 +406,7 @@ If you encounter issues not covered in this guide:
 Before running the pipeline, verify you have:
 
 - [ ] Created all directory structure
-- [ ] Copied all 7 notebooks from GitHub
+- [ ] Copied all notebooks from GitHub (00, 01, 02, 03, 04, 05, 06)
 - [ ] Copied helper scripts (`utils.R`, `breakpoint_functions.R`)
 - [ ] Updated producer list IDs in Notebook 00
 - [ ] Updated start/end dates in Notebook 00
@@ -429,11 +429,11 @@ When configuring notebooks, you'll need to update these key variables:
 | 00 | `START_DATE`, `END_DATE` | Your study timeframe |
 | 00 | `PROJECT_NAME` | Your research project name |
 | 01 | `INPUT_FILE` | Output filename from Notebook 00 |
-| 03 | `INPUT_FILE` | Output filename from Notebook 01 |
-| 03 | `STUDY_START_DATE`, `STUDY_END_DATE` | Your analysis period |
-| 06 | `WEEKLY_DATA_FILE` | Weekly aggregation from Notebook 03 |
-| 06 | `DISCOVERY_GROUP`, `VALIDATION_GROUPS` | Your actual group names |
-| 07 | `RQ1_RESULTS`, `CLEANED_POSTS`, etc. | Your actual output filenames |
+| 02 | `INPUT_FILE` | Output filename from Notebook 01 |
+| 02 | `STUDY_START_DATE`, `STUDY_END_DATE` | Your analysis period |
+| 05 | `WEEKLY_DATA_FILE` | Weekly aggregation from Notebook 02 |
+| 05 | `DISCOVERY_GROUP`, `VALIDATION_GROUPS` | Your actual group names |
+| 06 | `RQ1_RESULTS`, `CLEANED_POSTS`, etc. | Your actual output filenames |
 
 ---
 
