@@ -16,7 +16,7 @@ This pipeline was developed for the study:
 
 > **"A Pretty Blunt Approach": Meta's Political Content Reduction Policy and Italian Parliamentarians' Facebook Visibility**
 >
-> **Preprint:** https://osf.io/preprints/socarxiv/8dqag_v1/
+> **Preprint:** https://osf.io/preprints/socarxiv/8dqag_v2/
 
 The methodology is designed to be **fully reproducible** and **adaptable to other countries** where researchers have access to the Meta Content Library.
 
