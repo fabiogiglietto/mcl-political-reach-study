@@ -90,7 +90,7 @@ END_DATE <- "2024-12-31"
 - Optional: Re-elected MPs file for experience classification
 
 **Outputs:**
-- `combined_datasets/political_accounts_TIMESTAMP.rds`
+- `combined_datasets/political_posts_TIMESTAMP.rds`
 
 **Key Operations:**
 - Load posts with provenance from 00_data_download
@@ -118,7 +118,7 @@ LIST_MAPPINGS <- list(
 **Purpose:** Validate, clean, and create analysis-ready datasets
 
 **Inputs:**
-- Combined dataset from Notebook 01 (`combined_datasets/political_accounts_*.rds`)
+- Combined dataset from Notebook 01 (`combined_datasets/political_posts_*.rds`)
 
 **Outputs:**
 - `cleaned_data/cleaned_posts_TIMESTAMP.rds` - All validated posts
