@@ -22,21 +22,21 @@ This directory contains the Jupyter notebooks that implement the full analysis p
 │  01_build_dataset.ipynb          Process MCL output, standardize lists      │
 │           │                                                                 │
 │           ▼                                                                 │
-│  03_data_cleaning.ipynb          Validate, clean, create analysis datasets  │
+│  02_data_cleaning.ipynb          Validate, clean, create analysis datasets  │
 │           │                                                                 │
 │           ├───────────────────────────────────────┐                         │
 │           ▼                                       ▼                         │
-│  04_enrich_surface_info.ipynb    05_producer_list_mapping.ipynb             │
+│  03_enrich_surface_info.ipynb    04_producer_list_mapping.ipynb             │
 │  (API enrichment)                (Verify list membership)                   │
 │                                                                             │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                              ANALYSIS                                       │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  06_breakpoint_analysis.ipynb    Detect & validate structural breakpoints   │
+│  05_breakpoint_analysis.ipynb    Detect & validate structural breakpoints   │
 │           │                                                                 │
 │           ▼                                                                 │
-│  07_working_paper_outputs.ipynb  Generate publication-ready outputs         │
+│  06_working_paper_outputs.ipynb  Generate publication-ready outputs         │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -114,7 +114,7 @@ LIST_MAPPINGS <- list(
 
 ---
 
-### 03_data_cleaning.ipynb
+### 02_data_cleaning.ipynb
 **Purpose:** Validate, clean, and create analysis-ready datasets
 
 **Inputs:**
@@ -144,7 +144,7 @@ LIST_MAPPINGS <- list(
 
 ---
 
-### 04_enrich_surface_info.ipynb
+### 03_enrich_surface_info.ipynb
 **Purpose:** Query MCL API to enrich account metadata
 
 **Inputs:**
@@ -165,7 +165,7 @@ LIST_MAPPINGS <- list(
 
 ---
 
-### 05_producer_list_mapping.ipynb
+### 04_producer_list_mapping.ipynb
 **Purpose:** Verify all surface IDs belong to documented producer lists
 
 **Inputs:**
@@ -187,7 +187,7 @@ LIST_MAPPINGS <- list(
 
 ---
 
-### 06_breakpoint_analysis.ipynb
+### 05_breakpoint_analysis.ipynb
 **Purpose:** Detect and validate structural breakpoints (RQ1)
 
 **Inputs:**
@@ -216,12 +216,12 @@ LIST_MAPPINGS <- list(
 
 ---
 
-### 07_working_paper_outputs.ipynb
+### 06_working_paper_outputs.ipynb
 **Purpose:** Generate publication-ready tables and figures
 
 **Inputs:**
 - `cleaned_data/weekly_aggregation_TIMESTAMP.rds`
-- Results from Notebook 06
+- Results from Notebook 05
 
 **Outputs:**
 - Tables aligned with working paper numbering (Table 2-10)
@@ -243,7 +243,7 @@ LIST_MAPPINGS <- list(
 - Jupyter with R kernel (IRkernel)
 
 ### Data Access
-- Meta Content Library API access (Notebooks 04, 05)
+- Meta Content Library API access (Notebooks 03, 04)
 - MCL data exports (Notebook 01)
 
 ### Configuration
@@ -258,10 +258,10 @@ When replicating for a different country:
 
 1. **Notebook 00:** Update producer list IDs and date range
 2. **Notebook 01:** Update LIST_MAPPINGS for your producer list names
-3. **Notebook 03:** Usually works without modification (config-driven)
-4. **Notebooks 04-05:** Update producer list IDs in config
-5. **Notebook 06:** Works without modification (data-driven breakpoint detection)
-6. **Notebook 07:** Works without modification
+3. **Notebook 02:** Usually works without modification (config-driven)
+4. **Notebooks 03-04:** Update producer list IDs in config
+5. **Notebook 05:** Works without modification (data-driven breakpoint detection)
+6. **Notebook 06:** Works without modification
 
 See [REPLICATION_GUIDE.md](../REPLICATION_GUIDE.md) for detailed instructions.
 
@@ -272,7 +272,7 @@ See [REPLICATION_GUIDE.md](../REPLICATION_GUIDE.md) for detailed instructions.
 ### Common Issues
 
 **"No weekly_aggregation files found"**
-- Run Notebook 03 first to create cleaned datasets
+- Run Notebook 02 first to create cleaned datasets
 
 **"Re-elected MPs file not found"**
 - Either create the file or the pipeline will use single "MPs" category
@@ -280,7 +280,7 @@ See [REPLICATION_GUIDE.md](../REPLICATION_GUIDE.md) for detailed instructions.
 
 **"API rate limit exceeded"**
 - Add pauses between batch requests
-- Reduce batch size in Notebooks 04-05
+- Reduce batch size in Notebooks 03-04
 
 **Memory issues with large datasets**
 - Process in chunks
