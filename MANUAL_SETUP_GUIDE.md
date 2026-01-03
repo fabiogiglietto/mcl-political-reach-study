@@ -143,7 +143,7 @@ INPUT_FILE <- "data_download_output/posts_with_provenance_2024-12-27.rds"  # Upd
 - Standardizes list classifications
 - Creates analysis-ready dataset
 
-**Output:** `combined_datasets/political_accounts_TIMESTAMP.rds`
+**Output:** `combined_datasets/political_posts_TIMESTAMP.rds`
 
 ---
 
@@ -157,7 +157,7 @@ INPUT_FILE <- "data_download_output/posts_with_provenance_2024-12-27.rds"  # Upd
 
 ```r
 # Update input file path
-INPUT_FILE <- "combined_datasets/political_accounts_TIMESTAMP.rds"  # From Notebook 01
+INPUT_FILE <- "combined_datasets/political_posts_TIMESTAMP.rds"  # From Notebook 01
 
 # Set your study timeframe
 STUDY_START_DATE <- as.Date("2021-01-01")
@@ -191,7 +191,7 @@ STUDY_END_DATE <- as.Date("2025-01-31")
 
 ```r
 # Update input file
-INPUT_FILE <- "combined_datasets/political_accounts_TIMESTAMP.rds"
+INPUT_FILE <- "combined_datasets/political_posts_TIMESTAMP.rds"
 ```
 
 **What this notebook does:**

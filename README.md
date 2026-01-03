@@ -328,7 +328,7 @@ Run notebooks **in numerical order** within the secure environment:
 # - Processes raw MCL query output
 # - Standardizes list classifications
 # - Applies surface ID fallbacks
-# Output: combined_datasets/political_accounts_TIMESTAMP.rds
+# Output: combined_datasets/political_posts_TIMESTAMP.rds
 
 # NOTEBOOK 02: Data Cleaning (Creates analysis datasets)
 # - Validates and cleans data
