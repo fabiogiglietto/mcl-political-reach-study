@@ -28,7 +28,7 @@ Specialized statistical functions for breakpoint detection (RQ1 analysis):
 - **Full pipeline**: `run_breakpoint_analysis()` - Convenience wrapper for complete analysis
 
 ### `visualization.R`
-**Status**: Referenced in README but not yet implemented.
+**Status**: Referenced in main README (line 60) but **NOT present** in the repository.
 
 ## Current Status
 
