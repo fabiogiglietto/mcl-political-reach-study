@@ -1,0 +1,23 @@
+name: Delete Merged Claude Branches
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-branch:
+    # Only run if the PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Delete merged branch
+        # Only delete branches that start with 'claude/'
+        if: startsWith(github.event.pull_request.head.ref, 'claude/')
+        run: |
+          echo "Deleting branch: ${{ github.event.pull_request.head.ref }}"
+          gh api \
+            --method DELETE \
+            repos/${{ github.repository }}/git/refs/heads/${{ github.event.pull_request.head.ref }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
