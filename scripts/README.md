@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder contains reusable R functions designed to be shared across the analysis pipeline notebooks. The scripts provide modular, well-documented functions for common operations.
+This folder contains reusable R functions that are shared across the analysis pipeline notebooks. The scripts provide modular, well-documented functions for common operations, enabling code reuse and maintainability.
 
 ## Contents
 
@@ -28,41 +28,73 @@ Specialized statistical functions for breakpoint detection (RQ1 analysis):
 - **Full pipeline**: `run_breakpoint_analysis()` - Convenience wrapper for complete analysis
 
 ### `visualization.R`
-**Status**: Referenced in main README (line 60) but **NOT present** in the repository.
+**Status**: Referenced in main README (line 60) but not yet implemented. Planned for future development.
 
-## Current Status
+## Usage in Notebooks
 
-⚠️ **IMPORTANT**: These scripts are **NOT currently used** by the analysis notebooks.
-
-### Evidence
-- No `source("scripts/...")` calls found in any notebook (00-06)
-- Notebooks implement analysis logic **inline** rather than calling these functions
-- For example, `notebooks/05_breakpoint_analysis.ipynb` implements Bai-Perron and PELT detection directly instead of using `run_bai_perron()` or `run_pelt()`
-
-### Implications
-1. **Code duplication**: Analysis logic is duplicated across notebooks where needed
-2. **Maintenance burden**: Changes to methodology require updates in multiple places
-3. **Testing difficulty**: Inline code is harder to unit test than isolated functions
-4. **Documentation gap**: README describes a modular architecture that doesn't match implementation
-
-## Intended Usage (Not Currently Implemented)
-
-The scripts were designed to be sourced at the beginning of notebooks:
+All notebooks (00-06) now source these scripts and use their functions:
 
 ```r
-# Load shared utilities
+# Standard pattern at the beginning of each notebook
 source("scripts/utils.R")
+source("scripts/breakpoint_functions.R")  # For breakpoint analysis notebooks
+config <- load_config("IT")
+```
+
+### Notebook-Specific Usage
+
+| Notebook | utils.R Functions | breakpoint_functions.R | Primary Use Case |
+|----------|------------------|------------------------|------------------|
+| 00 | `load_config()` | - | Config-driven data download |
+| 01 | `load_config()`, `find_most_recent_file()` | - | Dataset construction |
+| 02 | `load_config()`, `find_most_recent_file()` | - | Data cleaning with config dates |
+| 03 | `load_config()`, `find_most_recent_file()` | - | Surface info enrichment |
+| 04 | `load_config()`, `find_most_recent_file()` | - | Producer list mapping |
+| 05 | `load_config()`, `load_latest_dataset()`, `add_policy_phase()` | `run_breakpoint_analysis()` | Full breakpoint detection pipeline |
+| 06 | `load_config()`, `load_latest_dataset()` | - | Paper outputs with config colors/settings |
+
+## Key Benefits
+
+✅ **Code Reuse**: Functions written once, used across multiple notebooks
+✅ **Maintainability**: Changes to methodology made in one place
+✅ **Consistency**: All notebooks use the same logic for common operations
+✅ **Testability**: Functions can be unit tested independently
+✅ **Documentation**: Centralized documentation of analytical methods
+✅ **Reproducibility**: Clear separation between methods and application
+
+## Example Usage Patterns
+
+### Loading Configuration
+```r
+source("scripts/utils.R")
+config <- load_config("IT")
+
+# Access configuration values
+start_date <- config$study_period$start_date
+producer_lists <- config$producer_lists
+group_colors <- config$output$colors
+```
+
+### File Management
+```r
+# Find and load most recent dataset
+latest_file <- find_most_recent_file("cleaned_data", "weekly_aggregation_.*\\.rds$")
+data <- readRDS(latest_file)
+
+# Or use the convenience function
+data <- load_latest_dataset("weekly_aggregation", "cleaned_data")
+```
+
+### Breakpoint Analysis
+```r
 source("scripts/breakpoint_functions.R")
 
-# Use utility functions
-config <- load_config("IT")
-data <- load_latest_dataset("weekly_aggregation")
-
-# Run breakpoint analysis
+# Run complete breakpoint analysis pipeline
 results <- run_breakpoint_analysis(
   data = weekly_data,
-  discovery_group = "MPs_reelected",
-  metrics = c("avg_views", "avg_reactions", "avg_shares", "avg_comments")
+  discovery_group = config$groups$discovery_sample,
+  metrics = c("avg_views", "avg_reactions", "avg_shares", "avg_comments"),
+  tolerance_days = 30
 )
 
 # Access results
@@ -70,44 +102,19 @@ final_breakpoints <- results$final_breakpoints
 validation <- results$validation
 ```
 
-## To Integrate These Scripts
-
-To make the notebooks actually use these functions:
-
-1. **Add source statements** to notebook headers:
-   ```r
-   source("scripts/utils.R")
-   source("scripts/breakpoint_functions.R")
-   ```
-
-2. **Replace inline implementations** with function calls:
-   - Replace inline Bai-Perron code with `run_bai_perron()`
-   - Replace inline PELT code with `run_pelt()`
-   - Replace manual clustering with `cluster_breakpoints()`
-   - Use `run_breakpoint_analysis()` wrapper for complete pipeline
-
-3. **Verify consistency**: Ensure function implementations match current inline logic
-
-4. **Update documentation**: Update README to reflect actual usage
-
-## Recommendation
-
-Choose one of these paths:
-
-**Option A: Use the scripts**
-- Refactor notebooks to source and use these functions
-- Gain maintainability, testability, and DRY benefits
-- Keep scripts synchronized with notebook needs
-
-**Option B: Remove the scripts**
-- Delete unused script files
-- Update README to remove references
-- Accept inline implementation approach
-
-**Current state (unused scripts)** creates confusion and maintenance burden without benefits.
+### Data Transformation
+```r
+# Add policy phases based on detected breakpoints
+data_phased <- add_policy_phase(
+  data = weekly_data,
+  breakpoints = final_breakpoints,
+  date_col = "week"
+)
+```
 
 ## Version
 
 - **utils.R**: Version 1.0.0
 - **breakpoint_functions.R**: Version 1.0.0
 - **Last updated**: 2026-01-04
+- **Status**: ✅ Actively used in all notebooks (00-06)

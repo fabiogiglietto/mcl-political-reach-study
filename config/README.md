@@ -2,173 +2,207 @@
 
 ## Purpose
 
-This folder contains YAML configuration files designed to store country-specific parameters, making the analysis pipeline easily adaptable to different national contexts without modifying code.
+This folder contains YAML configuration files that store country-specific parameters, making the analysis pipeline easily adaptable to different national contexts without modifying code. All notebooks (00-06) load configuration from these files using the `load_config()` function from `scripts/utils.R`.
 
 ## Contents
 
 ### `italy_config.yaml`
-Reference implementation containing all configuration parameters for the Italian study:
+Complete configuration for the Italian study containing:
 
-- **Country information**: Code, name, language
-- **Study timeframe**: Start/end dates for data collection
+- **Country information**: Code (IT), name, language
+- **Study timeframe**: Start/end dates (2021-01-01 to 2025-11-30)
 - **Meta policy timeline**: Official announcement dates and Italy-specific implementation dates
-- **Electoral events**: Major Italian elections (2022 General, 2024 EU) with campaign windows
-- **Political actor groups**: Definitions and selection criteria for:
-  - MPs (Re-elected): Continuous service across both legislatures
-  - MPs (New): Elected only in 2022
-  - Prominent Politicians: High-profile non-parliamentary politicians
-  - Extremists: Alternative media ecosystem accounts
-- **Producer list IDs**: Meta Content Library list identifiers used in the study
+- **Electoral events**: Major Italian elections with campaign windows
+  - 2022 General Election (2022-09-25)
+  - 2024 EU Parliamentary Election (2024-06-09)
+- **Political actor groups**: Definitions and selection criteria
+  - MPs_Reelected: Continuous service across both legislatures (~280 accounts)
+  - MPs_New: Elected only in 2022 (~270 accounts)
+  - Prominent_Politicians: High-profile non-parliamentary politicians (~200 accounts)
+  - Extremists: Alternative media ecosystem accounts (~150 accounts)
+- **Producer list IDs**: Meta Content Library list identifiers
+  - `mps_all: "2025-09-21-ymub"`
+  - `mps_reelected: "2025-12-06-iqbp"`
+  - `prominent_politicians: "2025-12-24-vpry"`
+  - `extremists_cluster1: "2025-11-29-vpjr"`
+  - `extremists_cluster2: "2025-11-29-qkqw"`
 - **Data quality parameters**: Imputation methods, censoring thresholds, group-specific parameters
 - **Analysis parameters**: Breakpoint detection settings, detected breakpoints (T1/T2/T3)
-- **Key findings**: Baseline metrics, decline percentages, validation results
-- **Output settings**: Figure formats, colors, table settings
+- **Key findings**: Baseline metrics (53,368 views), decline (-72.1%), recovery (+65.4% of baseline)
+- **Output settings**: Figure formats (PNG, 300 DPI, 12x6), group colors, table formats
 - **File paths**: Data and output directory structure
 
 ### `config_template.yaml`
 Template for creating configurations for new countries:
 - Same structure as `italy_config.yaml`
-- Contains placeholder values and inline documentation
-- Includes guidance on adapting the methodology to other national contexts
-- Designed to be copied and renamed to `[country_code]_config.yaml`
+- Contains placeholder values with inline documentation
+- Includes guidance on adapting the methodology to other contexts
+- **Usage**: Copy to `[country_code]_config.yaml` and customize
 
 ### `policy_timeline.yaml`
-**Status**: Referenced in main README (line 46) but **NOT present** in the repository.
+**Status**: Referenced in main README (line 46) but not present as a separate file. Policy timeline information is included within `italy_config.yaml` under the `policy_timeline:` key.
 
-## Current Status
+## Usage in Notebooks
 
-⚠️ **IMPORTANT**: These configuration files are **NOT currently used** by the analysis notebooks.
+All notebooks now load configuration at startup:
 
-### Evidence
-- No `load_config()` calls found in any notebook (00-06)
-- No `yaml::read_yaml()` or `read_yaml()` calls found
-- No references to `italy_config.yaml`, `config_template.yaml`, or `policy_timeline.yaml`
-- Configuration values are **hardcoded directly** in notebook cells instead
-
-### What This Means
-
-**Instead of:**
 ```r
-# Load configuration
-config <- load_config("IT")
-
-# Use config values
-start_date <- config$study_period$start_date
-discovery_group <- config$groups$discovery_sample
-producer_lists <- config$producer_lists
-```
-
-**Notebooks currently do:**
-```r
-# Hardcoded values directly in cells
-start_date <- as.Date("2021-01-01")
-discovery_group <- "MPs_Reelected"
-producer_lists <- list(
-  mps_all = "2025-09-21-ymub",
-  mps_reelected = "2025-12-06-iqbp",
-  # etc...
-)
-```
-
-### Implications
-
-1. **No cross-country portability**: Despite the stated goal of making the pipeline "adaptable to other countries," configuration is embedded in notebook code
-2. **Maintenance burden**: Changes to parameters require editing multiple notebook cells
-3. **Documentation gap**: The comprehensive YAML files document study design but aren't part of the computational workflow
-4. **Template not usable**: `config_template.yaml` cannot actually be used because notebooks don't load configs
-5. **README mismatch**: Main README describes using config files (lines 391-412) but this doesn't reflect implementation
-
-## Intended Usage (Not Currently Implemented)
-
-The configuration system was designed to enable:
-
-### 1. Easy Country Adaptation
-```bash
-# Create config for new country
-cp config/config_template.yaml config/de_config.yaml
-# Edit de_config.yaml with German-specific parameters
-```
-
-### 2. Load Config in Notebooks
-```r
-# At notebook start
+# Standard pattern in all notebooks
 source("scripts/utils.R")
-config <- load_config("IT")  # or "DE", "FR", etc.
+config <- load_config("IT")
+```
 
-# Access parameters
+### Configuration Access Patterns
+
+**Study Period:**
+```r
 study_start <- config$study_period$start_date
 study_end <- config$study_period$end_date
-groups <- config$groups$definitions
 ```
 
-### 3. Parameterized Analysis
-All country-specific values would be read from config rather than hardcoded, enabling:
-- Same notebooks for different countries
-- Version-controlled parameter changes
-- Clear documentation of study design decisions
-- Easier replication and adaptation
+**Producer Lists:**
+```r
+mps_list_id <- config$producer_lists$mps_reelected
+prominent_list_id <- config$producer_lists$prominent_politicians
+```
 
-## Current Value
+**Policy Timeline:**
+```r
+policy_start <- config$policy_timeline$initial_tests
+global_implementation <- config$policy_timeline$global_implementation
+reversal_date <- config$policy_timeline$reversal_announcement
+```
 
-Despite not being used computationally, the config files provide:
+**Elections:**
+```r
+italian_election <- config$elections[[1]]$date
+election_window_start <- config$elections[[1]]$window_start
+election_window_end <- config$elections[[1]]$window_end
+```
 
-✅ **Documentation**: Comprehensive record of study design decisions
-✅ **Reference**: Clear specification of all parameters used in the Italian study
-✅ **Template**: Starting point for researchers planning similar studies
-✅ **Reproducibility**: Documents exact values used (even though they're also in notebooks)
+**Groups:**
+```r
+discovery_group <- config$groups$discovery_sample  # "MPs_Reelected"
+group_definitions <- config$groups$definitions
+```
 
-## To Integrate Config Files
+**Output Settings:**
+```r
+figure_width <- config$output$figures$width
+figure_dpi <- config$output$figures$dpi
+group_colors <- config$output$colors
+```
 
-To make the notebooks actually use these configuration files:
+**File Paths:**
+```r
+data_dir <- config$paths$cleaned_data
+figures_dir <- config$paths$figures
+tables_dir <- config$paths$tables
+```
 
-1. **Implement `load_config()` in utils.R** (already present but unused):
-   ```r
-   source("scripts/utils.R")
-   config <- load_config("IT")
-   ```
+## Notebook-Specific Usage
 
-2. **Replace hardcoded values** in notebooks with config references:
-   - Study dates: `config$study_period$start_date`
-   - Group names: `config$groups$discovery_sample`
-   - Producer list IDs: `config$producer_lists$mps_all`
-   - Analysis parameters: `config$analysis$breakpoint_detection$cluster_tolerance_days`
-   - Colors: `config$output$colors$MPs_Reelected`
+| Notebook | Primary Config Values Used |
+|----------|---------------------------|
+| 00 | `producer_lists.*`, `study_period.*` |
+| 01 | `paths.*`, `groups.definitions` |
+| 02 | `study_period.*`, `policy_timeline.*`, `data_quality.*` |
+| 03 | `paths.cleaned_data` |
+| 04 | `paths.*`, `producer_lists.*` |
+| 05 | `groups.*`, `policy_timeline.*`, `elections.*`, `paths.*` |
+| 06 | `output.*`, `paths.*` |
 
-3. **Remove duplicate definitions** from notebook cells
+## Benefits of Config-Driven Approach
 
-4. **Test with multiple configs** to verify portability
+✅ **Cross-Country Portability**: Create new config files for different countries without changing code
+✅ **Single Source of Truth**: All parameters defined once, used everywhere
+✅ **Version Control**: Changes to study parameters are tracked in git
+✅ **Documentation**: Config files serve as comprehensive documentation of study design
+✅ **Consistency**: All notebooks use identical values for dates, groups, colors, etc.
+✅ **Maintainability**: Update parameters in one place, affects all notebooks
+✅ **Reproducibility**: Clear specification of all study parameters
 
-## Missing File
+## Creating Configuration for a New Country
 
-The main README references `policy_timeline.yaml` (line 46) which does not exist. The policy timeline information is currently:
-- Embedded in `italy_config.yaml` under the `policy_timeline:` key
-- Not needed as a separate file given current non-usage
+To replicate this study for another country:
 
-## Recommendation
+### 1. Copy Template
+```bash
+cp config/config_template.yaml config/de_config.yaml  # For Germany
+```
 
-Choose one of these paths:
+### 2. Customize Parameters
+Edit `de_config.yaml` to specify:
+- Country code, name, language
+- Study timeframe
+- Electoral events and dates
+- Political actor group definitions
+- Producer list IDs (after creating lists in MCL)
+- Expected policy implementation dates
 
-**Option A: Use the configs**
-- Refactor notebooks to source `utils.R` and load configs
-- Replace hardcoded values with config references
-- Gain true country portability and maintainability
-- Makes the "replication-friendly" design actually work
+### 3. Load in Notebooks
+```r
+config <- load_config("DE")  # Instead of "IT"
+```
 
-**Option B: Keep as documentation only**
-- Accept configs as documentation artifacts
-- Remove references to loading configs from README
-- Update README to clarify configs document design but aren't loaded
-- Keep hardcoded approach in notebooks
+### 4. Run Pipeline
+Execute notebooks 00-06 in sequence. All country-specific parameters will be loaded from the config file automatically.
 
-**Option C: Remove the configs**
-- Delete YAML files since they're redundant with notebook code
-- Update README to remove config references
-- Accept single-country, less portable design
+## Config File Structure
 
-**Current state (unused configs)** creates false expectations about portability and duplicates effort (maintaining both configs and hardcoded values).
+The config file is organized into logical sections:
+
+```yaml
+country:           # Basic country metadata
+study_period:      # Temporal boundaries
+policy_timeline:   # Meta policy announcement dates
+elections:         # Electoral events (array)
+groups:           # Political actor definitions
+producer_lists:    # MCL list IDs
+data_quality:     # Data processing parameters
+analysis:         # Breakpoint detection settings
+findings:         # Results (for reference)
+output:           # Figure/table settings
+paths:            # Directory structure
+```
+
+## Implementation Notes
+
+### load_config() Function
+Located in `scripts/utils.R` (lines 35-71), this function:
+- Reads YAML files from `config/` directory
+- Validates required fields
+- Converts date strings to R Date objects
+- Processes election dates into proper format
+- Returns a nested list structure
+
+### Config Validation
+The function checks for required fields:
+- `country`
+- `study_period`
+- `groups`
+
+Missing fields will stop execution with a clear error message.
+
+### Date Handling
+All dates in the config file are stored as strings (`"YYYY-MM-DD"`) and automatically converted to R `Date` objects by `load_config()`.
 
 ## Version
 
 - **italy_config.yaml**: Contains parameters for the published Italian study
 - **config_template.yaml**: Template for country adaptation
 - **Last updated**: 2026-01-04
+- **Status**: ✅ Actively loaded by all notebooks (00-06)
+
+## Migration from Hardcoded Values
+
+The refactoring from hardcoded values to config-driven approach involved:
+- **Notebook 00**: 2 date values + 5 producer list IDs → config
+- **Notebook 01**: File paths → config
+- **Notebook 02**: 20+ policy/study dates → config
+- **Notebook 03**: Data paths → config
+- **Notebook 04**: 5 producer list IDs + paths → config
+- **Notebook 05**: 15+ dates + groups + elections → config
+- **Notebook 06**: Output settings + colors → config
+
+This centralization eliminated duplication and created a true country-portable pipeline.
