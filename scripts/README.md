@@ -104,8 +104,6 @@ Choose one of these paths:
 - Update README to remove references
 - Accept inline implementation approach
 
-**Current state (unused scripts)** creates confusion and maintenance burden without benefits.
-
 ## Version
 
 - **utils.R**: Version 1.0.0
