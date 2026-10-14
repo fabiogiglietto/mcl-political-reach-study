@@ -89,15 +89,15 @@ To import these lists into your own MCL project:
 1. **Access Meta Content Library:** Navigate to https://www.facebook.com/transparency-tools/content-library/
 2. **Navigate to Producer Lists:** Click on "Producer Lists" in the left sidebar
 3. **Import from URL:** Click "Import" and paste one of the URLs above
-4. **Note the List ID:** Once imported, note the new list ID assigned in your workspace
-5. **Update Configuration:** Add the list ID to your `config/italy_config.yaml` or Notebook 00 configuration
+4. **Generate an API list ID:** Open the list (**View**), click the down-arrow to the **right** of **Share**, then **Create API list ID**. The API cannot see a list until this is done, and the numeric ID in the UI's URL does not work in API calls. The API ID is a date-slug such as `2025-12-06-iqbp`: a *snapshot* of the list on that date, so finish curating first and regenerate it after any edit
+5. **Update Configuration:** Add the API list ID to your `config/italy_config.yaml` or Notebook 00 configuration
 
 **Example:**
 ```r
 # In Notebook 00_data_download.ipynb
 PRODUCER_LISTS <- list(
   list(
-    list_id = "1508867967036191",  # Your imported list ID
+    list_id = "2025-12-06-iqbp",  # Your API list ID (not the numeric UI ID)
     list_name = "MPs_Reelected",
     description = "MPs elected in 2018 AND 2022"
   ),
