@@ -27,9 +27,6 @@ Specialized statistical functions for breakpoint detection (RQ1 analysis):
 - **Cross-group validation**: `validate_breakpoints_across_groups()` - Verify patterns across groups
 - **Full pipeline**: `run_breakpoint_analysis()` - Convenience wrapper for complete analysis
 
-### `visualization.R`
-**Status**: Referenced in README but not yet implemented.
-
 ## Current Status
 
 ⚠️ **IMPORTANT**: These scripts are **NOT currently used** by the analysis notebooks.

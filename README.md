@@ -42,8 +42,7 @@ mcl-political-reach-study/
 │
 ├── config/
 │   ├── italy_config.yaml        # Italy-specific configuration
-│   ├── config_template.yaml     # Template for new countries
-│   └── policy_timeline.yaml     # Meta policy announcement dates
+│   └── config_template.yaml     # Template for new countries (both include a policy_timeline section)
 │
 ├── notebooks/
 │   ├── 00_data_download.ipynb           # Download posts from MCL API
@@ -56,8 +55,7 @@ mcl-political-reach-study/
 │
 ├── scripts/
 │   ├── utils.R                  # Shared utility functions
-│   ├── breakpoint_functions.R   # Bai-Perron & PELT implementations
-│   └── visualization.R          # Plotting functions
+│   └── breakpoint_functions.R   # Bai-Perron & PELT implementations
 │
 ├── docs/
 │   ├── DATA_DICTIONARY.md       # Variable definitions
@@ -221,7 +219,7 @@ The repository includes a detailed replication guide ([REPLICATION_GUIDE.md](REP
    - Policy timeline expectations
    - Study timeframe
 
-4. **Execute pipeline notebooks** in sequence (00 → 07)
+4. **Execute pipeline notebooks** in sequence (00 → 06)
 
 The modular design allows researchers to modify individual components while maintaining methodological consistency with the original study.
 
@@ -294,7 +292,7 @@ mkdir -p mcl-political-reach-study/config
 # - Document the list IDs (you'll paste them into notebook 00)
 ```
 
-**For each notebook (00-07), you need to:**
+**For each notebook (00-06), you need to:**
 
 1. **In Meta SRE:** Create a new R notebook with the corresponding name
    - Notebook 00: `00_data_download.ipynb`
@@ -369,7 +367,7 @@ Run notebooks **in numerical order** within the secure environment:
 
 **Export review process:**
 1. Complete all analysis within the secure environment
-2. Generate aggregated outputs via Notebook 07
+2. Generate aggregated outputs via Notebooks 05–06
 3. Submit export requests through your platform's review process
 4. Only approved, non-sensitive outputs will be released
 
